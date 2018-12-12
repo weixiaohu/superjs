@@ -1,10 +1,10 @@
-exports.handler = function (event, context, callback) {
-    console.log(event.queryStringParameters)
-    let data = {
-        "url": event.queryStringParameters.url
-    };
+import readFilePromise from "fs-readfile-promise"
+
+exports.handler = async  (event, context, callback) => {
+    let type = event.queryStringParameters.type
+    let jsonData = await readFilePromise(`./json/${type}.json`,"utf8");
     callback(null, {
         statusCode: 200,
-        body: JSON.stringify([data])
+        body: jsonData
     });
 }
